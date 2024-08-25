@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+    <div class="main_container">
+        <fieldset class="main_container1">
+
+            <legend>
+                Movie Recommender
+            </legend>
+            <div class="search">
+                <form action="/" method="post">
+
+                    <div>
+                        <label>Search Movie Name</label>
+                    </div>
+
+                    {% if input1 == '' %}
+                    <input autocomplete="off" role="combobox" list="" id="input" name="input"
+                        placeholder="Select your fav Movie">
+                    {% else %}
+                    <input autocomplete="off" role="combobox" list="" id="input" name="input" placeholder="{{input1}}">
+                    {% endif %}
+                    <!-- Its important that you keep list attribute empty to hide the default dropdown icon and the browser's default datalist -->
+                    <div>
+                        <datalist id="browsers" role="listbox">
+
+                            {% for key in my_dict %}
+                            <option value="{{key|e}}">{{ key|e }}</option>
+                            {% endfor %}
+                        </datalist>
+                    </div>
+
+                    <button id="btn">Recommend</button>
+                </form>
+
+            </div>
+        </fieldset>
+    </div>
+
+    {% if input1 in dictionary1 %}
+    <h1 style="color: white; margin-bottom: 30px;">
+        Your Movie is <span style="color: green;">{{ input1 }}.</span>
+    </h1>
+    {% endif %}
+
+    <div class="recommended_movies">
+
+        {% if input1 in dictionary1 %}
+        {% for key, value in dict1.items() %}
+        <div class="movie">
+            <img src="{{ value }}" alt="dfd">
+            <p>{{ key|e }}</p>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h1 style="color:white">
+            <span style="color: red;">
+                {{input1}}
+            </span>, Movie is not available.
+        </h1>
+        {% endif %}
+    </div>
+    <script src="/static/scripts.js"></script>
+</body>
+
+</html>
